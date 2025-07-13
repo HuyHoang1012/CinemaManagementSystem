@@ -7,23 +7,23 @@ public partial class Ticket
 {
     public int TicketId { get; set; }
 
-    public int ShowtimeId { get; set; }
+    public int? ShowtimeId { get; set; }
 
-    public int CustomerId { get; set; }
+    public int? CustomerId { get; set; }
 
     public string? SeatNumber { get; set; }
 
-    public decimal Price { get; set; }
+    public int? Price { get; set; }
 
-    public DateTime? BookingDate { get; set; }
+    public DateOnly? BookingDate { get; set; }
 
     public bool? IsPaid { get; set; }
 
-    public int ProcessedBy { get; set; }
+    public int? ProcessedBy { get; set; }
 
-    public virtual Customer Customer { get; set; } = null!;
+    public virtual Customer? Customer { get; set; }
 
-    public virtual User ProcessedByNavigation { get; set; } = null!;
+    public virtual User? ProcessedByNavigation { get; set; }
 
-    public virtual Showtime Showtime { get; set; } = null!;
+    public virtual Showtime? Showtime { get; set; }
 }
