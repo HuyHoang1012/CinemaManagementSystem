@@ -18,52 +18,61 @@ namespace CinemaManagementSystem
     /// //
     public partial class MainWindow : Window
     {
-        private CinemaManagementSystemDbContext con;
-        public MainWindow()
-        {
-            con = new CinemaManagementSystemDbContext();
-            InitializeComponent();
-        }
-
-        private void btnLogin_Click(object sender, RoutedEventArgs e)
-        {
-            String username = txtUsername.Text.Trim();
-            String password = txtPassword.Password.Trim();
-
-            if (string.IsNullOrEmpty(username) || string.IsNullOrEmpty(password))
+            public MainWindow()
             {
-                txtMessage.Text = "Vui lòng nhập tên đăng nhập và mật khẩu.";
-                return;
-            }
+                InitializeComponent();
 
-            try
-            {
-                var user = con.Users.FirstOrDefault(u => u.Username == username && u.Password == password);
-                if (user != null)
+                if (Session.CurrentUser.Role != "Admin")
                 {
-                    if (user.Role == "Admin")
-                    {
-                        MessageBox.Show("Chào mừng Admin!", "Đăng nhập thành công", MessageBoxButton.OK, MessageBoxImage.Information);
-                    }
-                    else if (user.Role == "Nhân viên")
-                    {
-                        MessageBox.Show("Chào mừng User!", "Đăng nhập thành công", MessageBoxButton.OK, MessageBoxImage.Information);
-                    }
-                    else
-                    {
-                        txtMessage.Text = "Vai trò người dùng không hợp lệ.";
+                    btnManageUsers.Visibility = Visibility.Collapsed;
+                }
 
-                    }
-                }
-                else
-                {
-                    txtMessage.Text = "Tên đăng nhập hoặc mật khẩu không đúng.";
-                }
+                MainContent.Content = new DashboardUserControl();
             }
-            catch (Exception ex)
+
+            private void Dashboard_Click(object sender, RoutedEventArgs e)
             {
-                txtMessage.Text = "Đã xảy ra lỗi: " + ex.Message;
+                MainContent.Content = new DashboardUserControl();
             }
+
+            private void ManageMovies_Click(object sender, RoutedEventArgs e)
+            {
+                MainContent.Content = new ManageMoviesUserControl();
+            }
+
+            private void ManageShowtimes_Click(object sender, RoutedEventArgs e)
+            {
+                MainContent.Content = new ManageShowtimesUserControl();
+            }
+
+            private void ManageTickets_Click(object sender, RoutedEventArgs e)
+            {
+                MainContent.Content = new ManageTicketsUserControl();
+            }
+
+            private void ManageCustomers_Click(object sender, RoutedEventArgs e)
+            {
+                MainContent.Content = new ManageCustomersUserControl();
+            }
+
+            private void ManageUsers_Click(object sender, RoutedEventArgs e)
+            {
+                MainContent.Content = new ManageUsersUserControl();
+            }
+
+            private void Logout_Click(object sender, RoutedEventArgs e)
+            {
+                var result = MessageBox.Show("Bạn có chắc muốn đăng xuất?", "Xác nhận", MessageBoxButton.YesNo, MessageBoxImage.Question);
+                if (result == MessageBoxResult.Yes)
+                {
+                    Session.CurrentUser = null;
+
+                    LoginWindow login = new LoginWindow();
+                    login.Show();
+
+                    this.Close();
+                }
+            }
+
         }
     }
-}
