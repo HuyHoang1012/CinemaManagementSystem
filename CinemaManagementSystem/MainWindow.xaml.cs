@@ -37,27 +37,27 @@ namespace CinemaManagementSystem
 
             private void ManageMovies_Click(object sender, RoutedEventArgs e)
             {
-                MainContent.Content = new ManageMoviesUserControl();
+                //MainContent.Content = new ManageMoviesUserControl();
             }
 
             private void ManageShowtimes_Click(object sender, RoutedEventArgs e)
             {
-                MainContent.Content = new ManageShowtimesUserControl();
+               //MainContent.Content = new ManageShowtimesUserControl();
             }
 
             private void ManageTickets_Click(object sender, RoutedEventArgs e)
             {
-                MainContent.Content = new ManageTicketsUserControl();
+                //MainContent.Content = new ManageTicketsUserControl();
             }
 
             private void ManageCustomers_Click(object sender, RoutedEventArgs e)
             {
-                MainContent.Content = new ManageCustomersUserControl();
+                //MainContent.Content = new ManageCustomersUserControl();
             }
 
             private void ManageUsers_Click(object sender, RoutedEventArgs e)
             {
-                MainContent.Content = new ManageUsersUserControl();
+                //MainContent.Content = new ManageUsersUserControl();
             }
 
             private void Logout_Click(object sender, RoutedEventArgs e)
