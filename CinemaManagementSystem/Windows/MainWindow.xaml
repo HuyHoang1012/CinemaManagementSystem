@@ -1,0 +1,33 @@
+﻿<Window x:Class="CinemaManagementSystem.Windows.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:CinemaManagementSystem.Windows"
+        mc:Ignorable="d"
+                 Title="Cinema Management System"
+        Height="600" Width="900"
+        WindowStartupLocation="CenterScreen">
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="200"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+
+        <StackPanel Background="#2D2D30" Grid.Column="0">
+            <TextBlock Text="Cinema Manager" Foreground="White" FontSize="18"
+                       FontWeight="Bold" HorizontalAlignment="Center" Margin="0,20,0,20"/>
+            <Button Content="Dashboard" Margin="5" Height="40" Click="Dashboard_Click"/>
+            <Button Content="Manage Movies" Margin="5" Height="40" Click="ManageMovies_Click"/>
+            <Button Content="Manage Showtimes" Margin="5" Height="40" Click="ManageShowtimes_Click"/>
+            <Button Content="Manage Tickets" Margin="5" Height="40" Click="ManageTickets_Click"/>
+            <Button Content="Manage Customers" Margin="5" Height="40" Click="ManageCustomers_Click"/>
+
+            <Button Content="Manage Users" Margin="5" Height="40" Click="ManageUsers_Click" Background="CadetBlue" x:Name="btnManageUsers"/>
+
+            <Button Content="Logout" Margin="5" Height="40" Click="Logout_Click" Background="#FF5555" Foreground="White"/>
+        </StackPanel>
+
+        <ContentControl x:Name="MainContent" Grid.Column="1"/>
+    </Grid>
+</Window>
