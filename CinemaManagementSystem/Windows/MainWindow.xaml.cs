@@ -57,7 +57,7 @@ namespace CinemaManagementSystem.Windows
 
         private void ManageUsers_Click(object sender, RoutedEventArgs e)
         {
-            //MainContent.Content = new ManageUsersUserControl();
+            MainContent.Content = new ManageUsersUserControl();
         }
 
         private void Logout_Click(object sender, RoutedEventArgs e)

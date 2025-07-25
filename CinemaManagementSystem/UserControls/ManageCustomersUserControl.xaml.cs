@@ -59,6 +59,12 @@ namespace CinemaManagementSystem.UserControls
                     return;
                 }
 
+                if (!txtPhone.Text.Trim().All(char.IsDigit))
+                {
+                    MessageBox.Show("Số điện thoại chỉ được chứa số.");
+                    return;
+                }
+
                 Customer customer = new Customer
                 {
                     CustomerId = customerId,
@@ -84,6 +90,12 @@ namespace CinemaManagementSystem.UserControls
                 var customer = con.Customers.FirstOrDefault(c => c.CustomerId == customerId);
                 if (customer != null)
                 {
+                    if (!txtPhone.Text.Trim().All(char.IsDigit))
+                    {
+                        MessageBox.Show("Số điện thoại chỉ được chứa số.");
+                        return;
+                    }
+
                     customer.FullName = txtFullName.Text.Trim();
                     customer.Phone = txtPhone.Text.Trim();
                     con.SaveChanges();

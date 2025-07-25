@@ -27,6 +27,7 @@ namespace CinemaManagementSystem.UserControls
         {
             InitializeComponent();
             LoadShowtimes();
+            LoadMoviesToComboBox();
         }
 
         private void LoadShowtimes()
@@ -34,10 +35,15 @@ namespace CinemaManagementSystem.UserControls
             dataGridShowtimes.ItemsSource = con.Showtimes.ToList();
         }
 
+        private void LoadMoviesToComboBox()
+        {
+            cbMovieID.ItemsSource = con.Movies.ToList();
+        }
+
         private void ResetFields()
         {
             txtShowtimeID.Text = "";
-            txtMovieID.Text = "";
+            cbMovieID.SelectedIndex = -1;
             txtShowDate.Text = "";
             txtShowTime.Text = "";
             txtRoomName.Text = "";
@@ -55,21 +61,23 @@ namespace CinemaManagementSystem.UserControls
                     return;
                 }
 
-                if (!int.TryParse(txtMovieID.Text.Trim(), out int movieId) || movieId < 1)
+                if (cbMovieID.SelectedValue == null)
                 {
-                    MessageBox.Show("Movie ID không hợp lệ hoặc nhỏ hơn 1.");
+                    MessageBox.Show("Vui lòng chọn phim.");
                     return;
                 }
 
+                int movieId = (int)cbMovieID.SelectedValue;
+
                 if (!DateOnly.TryParse(txtShowDate.Text.Trim(), out DateOnly showDate))
                 {
-                    MessageBox.Show("Ngày chiếu không hợp lệ (định dạng yyyy-MM-dd).");
+                    MessageBox.Show("Ngày chiếu không hợp lệ (yyyy-MM-dd).");
                     return;
                 }
 
                 if (!TimeOnly.TryParse(txtShowTime.Text.Trim(), out TimeOnly showTime))
                 {
-                    MessageBox.Show("Giờ chiếu không hợp lệ (định dạng HH:mm).");
+                    MessageBox.Show("Giờ chiếu không hợp lệ (HH:mm).");
                     return;
                 }
 
@@ -79,9 +87,7 @@ namespace CinemaManagementSystem.UserControls
                     return;
                 }
 
-                // Check trùng ID
-                var existing = con.Showtimes.FirstOrDefault(s => s.ShowtimeId == showtimeId);
-                if (existing != null)
+                if (con.Showtimes.Any(s => s.ShowtimeId == showtimeId))
                 {
                     MessageBox.Show($"Showtime ID {showtimeId} đã tồn tại.");
                     return;
@@ -114,11 +120,12 @@ namespace CinemaManagementSystem.UserControls
                 var showtime = con.Showtimes.FirstOrDefault(s => s.ShowtimeId == showtimeId);
                 if (showtime != null)
                 {
-                    if (!int.TryParse(txtMovieID.Text.Trim(), out int movieId) || movieId < 1)
+                    if (cbMovieID.SelectedValue == null)
                     {
-                        MessageBox.Show("Movie ID không hợp lệ hoặc nhỏ hơn 1.");
+                        MessageBox.Show("Vui lòng chọn phim.");
                         return;
                     }
+                    int movieId = (int)cbMovieID.SelectedValue;
 
                     if (!DateOnly.TryParse(txtShowDate.Text.Trim(), out DateOnly showDate))
                     {
@@ -193,9 +200,9 @@ namespace CinemaManagementSystem.UserControls
             var results = con.Showtimes
                 .Where(s =>
                     s.ShowtimeId.ToString().Contains(keyword) ||
-                    (s.MovieId.HasValue && s.MovieId.ToString().Contains(keyword)) ||
-                    (s.ShowDate.HasValue && s.ShowDate.ToString().Contains(keyword)) ||
-                    (s.ShowTime1.HasValue && s.ShowTime1.ToString().Contains(keyword)) ||
+                    s.MovieId.ToString().Contains(keyword) ||
+                    s.ShowDate.ToString().Contains(keyword) ||
+                    s.ShowTime1.ToString().Contains(keyword) ||
                     (s.RoomName != null && s.RoomName.ToLower().Contains(keyword)))
                 .ToList();
 
@@ -207,7 +214,7 @@ namespace CinemaManagementSystem.UserControls
             if (dataGridShowtimes.SelectedItem is Showtime showtime)
             {
                 txtShowtimeID.Text = showtime.ShowtimeId.ToString();
-                txtMovieID.Text = showtime.MovieId?.ToString() ?? "";
+                cbMovieID.Text = showtime.MovieId?.ToString() ?? "";
                 txtShowDate.Text = showtime.ShowDate?.ToString("yyyy-MM-dd") ?? "";
                 txtShowTime.Text = showtime.ShowTime1?.ToString("HH:mm") ?? "";
                 txtRoomName.Text = showtime.RoomName ?? "";

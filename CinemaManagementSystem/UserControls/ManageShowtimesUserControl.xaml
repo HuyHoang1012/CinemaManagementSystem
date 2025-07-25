@@ -13,7 +13,7 @@
             <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
 
-        <!-- DataGrid hiển thị Showtimes -->
+        <!-- DataGrid -->
         <DataGrid x:Name="dataGridShowtimes"
                   AutoGenerateColumns="False"
                   IsReadOnly="True"
@@ -22,17 +22,17 @@
                   Margin="0,0,0,10">
             <DataGrid.Columns>
                 <DataGridTextColumn Header="ID" Binding="{Binding ShowtimeId}" Width="Auto"/>
-                <DataGridTextColumn Header="Movie ID" Binding="{Binding MovieId}" Width="Auto"/>
-                <DataGridTextColumn Header="Show Date" Binding="{Binding ShowDate}" Width="Auto"/>
-                <DataGridTextColumn Header="Show Time" Binding="{Binding ShowTime1}" Width="Auto"/>
-                <DataGridTextColumn Header="Room Name" Binding="{Binding RoomName}" Width="*" />
+                <DataGridTextColumn Header="Movie ID" Binding="{Binding MovieId}" Width="*"/>
+                <DataGridTextColumn Header="Show Date" Binding="{Binding ShowDate}" Width="*"/>
+                <DataGridTextColumn Header="Show Time" Binding="{Binding ShowTime1}" Width="*"/>
+                <DataGridTextColumn Header="Room Name" Binding="{Binding RoomName}" Width="*"/>
             </DataGrid.Columns>
         </DataGrid>
 
-        <!-- Phần dưới -->
+        <!-- Control Panel -->
         <StackPanel Grid.Row="1" Orientation="Vertical">
 
-            <!-- Search Box -->
+            <!-- Search -->
             <StackPanel Orientation="Horizontal" Margin="0,5,0,0" HorizontalAlignment="Left">
                 <TextBox x:Name="txtSearch" Width="200" Margin="5" />
                 <Button Content="Search" Click="Search_Click" Margin="5" Width="80"/>
@@ -47,27 +47,27 @@
             </StackPanel>
 
             <!-- Input fields -->
-            <StackPanel Orientation="Vertical" Margin="0,10,0,0" HorizontalAlignment="Left">
+            <StackPanel Orientation="Vertical" Margin="0,10,0,0">
                 <!-- Row 1 -->
                 <StackPanel Orientation="Horizontal" Margin="0,5">
                     <StackPanel Margin="5">
-                        <TextBlock Text="Showtime ID" />
+                        <TextBlock Text="Showtime ID"/>
                         <TextBox x:Name="txtShowtimeID" Width="350"/>
                     </StackPanel>
                     <StackPanel Margin="5">
-                        <TextBlock Text="Movie ID" />
-                        <TextBox x:Name="txtMovieID" Width="350"/>
+                        <TextBlock Text="Movie"/>
+                        <ComboBox x:Name="cbMovieID" Width="350" DisplayMemberPath="MovieName" SelectedValuePath="MovieId"/>
                     </StackPanel>
                 </StackPanel>
 
                 <!-- Row 2 -->
                 <StackPanel Orientation="Horizontal" Margin="0,5">
                     <StackPanel Margin="5">
-                        <TextBlock Text="Show Date (yyyy-MM-dd)" />
+                        <TextBlock Text="Show Date (yyyy-MM-dd)"/>
                         <TextBox x:Name="txtShowDate" Width="350"/>
                     </StackPanel>
                     <StackPanel Margin="5">
-                        <TextBlock Text="Show Time (HH:mm)" />
+                        <TextBlock Text="Show Time (HH:mm)"/>
                         <TextBox x:Name="txtShowTime" Width="350"/>
                     </StackPanel>
                 </StackPanel>
@@ -75,7 +75,7 @@
                 <!-- Row 3 -->
                 <StackPanel Orientation="Horizontal" Margin="0,5">
                     <StackPanel Margin="5">
-                        <TextBlock Text="Room Name" />
+                        <TextBlock Text="Room Name"/>
                         <TextBox x:Name="txtRoomName" Width="350"/>
                     </StackPanel>
                 </StackPanel>

@@ -25,22 +25,27 @@
                   Margin="0,0,0,10">
             <DataGrid.Columns>
                 <DataGridTextColumn Header="Ticket ID" Binding="{Binding TicketId}" Width="Auto" />
-                <DataGridTextColumn Header="Showtime ID" Binding="{Binding ShowtimeId}" Width="Auto" />
-                <DataGridTextColumn Header="Customer ID" Binding="{Binding CustomerId}" Width="Auto" />
+                <DataGridTextColumn Header="Showtime ID" Binding="{Binding ShowtimeId}" Width="*" />
+                <DataGridTextColumn Header="Customer ID" Binding="{Binding CustomerId}" Width="*" />
                 <DataGridTextColumn Header="Seat Number" Binding="{Binding SeatNumber}" Width="*" />
-                <DataGridTextColumn Header="Price" Binding="{Binding Price}" Width="Auto" />
-                <DataGridTextColumn Header="Booking Date" Binding="{Binding BookingDate}" Width="Auto" />
-                <DataGridCheckBoxColumn Header="Is Paid" Binding="{Binding IsPaid, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Width="Auto" />
+                <DataGridTextColumn Header="Price" Binding="{Binding Price}" Width="*" />
+                <DataGridTextColumn Header="Booking Date" Binding="{Binding BookingDate}" Width="*" />
+                <DataGridCheckBoxColumn Header="Is Paid" Binding="{Binding IsPaid, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Width="*" />
             </DataGrid.Columns>
         </DataGrid>
 
         <!-- Control panel -->
         <StackPanel Grid.Row="1" Orientation="Vertical">
 
-            <!-- Search -->
             <StackPanel Orientation="Horizontal" Margin="0,5,0,0" HorizontalAlignment="Left">
+
                 <TextBox x:Name="txtSearch" Width="200" Margin="5" />
                 <Button Content="Search" Click="Search_Click" Margin="5" Width="80" />
+
+                <TextBlock Text="Showtime ID:" VerticalAlignment="Center" Margin="10,0,5,0" />
+                <ComboBox x:Name="cbShowtimeForSeats" Width="120" Margin="5" />
+                <Button Content="Check available seats" Click="ViewAvailableSeats_Click" Width="150" Margin="5" />
+
             </StackPanel>
 
             <!-- Buttons -->
@@ -61,7 +66,7 @@
                     </StackPanel>
                     <StackPanel Margin="5">
                         <TextBlock Text="Showtime ID" />
-                        <TextBox x:Name="txtShowtimeId" Width="350" />
+                        <ComboBox x:Name="cbShowtimeId" Width="350" />
                     </StackPanel>
                 </StackPanel>
 
@@ -69,7 +74,7 @@
                 <StackPanel Orientation="Horizontal" Margin="0,5">
                     <StackPanel Margin="5">
                         <TextBlock Text="Customer ID" />
-                        <TextBox x:Name="txtCustomerId" Width="350" />
+                        <ComboBox x:Name="cbCustomerId" Width="350" />
                     </StackPanel>
                     <StackPanel Margin="5">
                         <TextBlock Text="Seat Number" />
