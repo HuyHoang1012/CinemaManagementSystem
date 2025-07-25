@@ -47,12 +47,12 @@ namespace CinemaManagementSystem.Windows
 
         private void ManageTickets_Click(object sender, RoutedEventArgs e)
         {
-            //MainContent.Content = new ManageTicketsUserControl();
+            MainContent.Content = new ManageTicketsUserControl(Session.CurrentUser.UserId);
         }
 
         private void ManageCustomers_Click(object sender, RoutedEventArgs e)
         {
-            //MainContent.Content = new ManageCustomersUserControl();
+            MainContent.Content = new ManageCustomersUserControl();
         }
 
         private void ManageUsers_Click(object sender, RoutedEventArgs e)
