@@ -48,8 +48,28 @@ namespace CinemaManagementSystem.UserControls
         {
             try
             {
+                if (!int.TryParse(txtMovieID.Text.Trim(), out int movieId))
+                {
+                    MessageBox.Show("Movie ID không hợp lệ. Vui lòng nhập số nguyên.");
+                    return;
+                }
+                if (movieId < 1)
+                {
+                    MessageBox.Show("Movie ID phải lớn hơn hoặc bằng 1.");
+                    return;
+                }
+
+                // Kiểm tra trùng ID trong DB
+                var existingMovieDb = con.Movies.FirstOrDefault(m => m.MovieId == movieId);
+                if (existingMovieDb != null)
+                {
+                    MessageBox.Show($"Movie ID {movieId} đã tồn tại. Vui lòng chọn ID khác.");
+                    return;
+                }
+
                 Movie movie = new Movie
                 {
+                    MovieId = movieId,
                     MovieName = txtMovieName.Text.Trim(),
                     Genre = txtGenre.Text.Trim(),
                     Duration = int.TryParse(txtDuration.Text.Trim(), out int dur) ? dur : null,

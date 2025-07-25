@@ -42,7 +42,7 @@ namespace CinemaManagementSystem.Windows
 
         private void ManageShowtimes_Click(object sender, RoutedEventArgs e)
         {
-            //MainContent.Content = new ManageShowtimesUserControl();
+            MainContent.Content = new ManageShowtimesUserControl();
         }
 
         private void ManageTickets_Click(object sender, RoutedEventArgs e)
