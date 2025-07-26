@@ -51,8 +51,7 @@ namespace CinemaManagementSystem.UserControls
             cbCustomerId.SelectedIndex = -1;
             txtSeatNumber.Text = "";
             txtPrice.Text = "";
-            txtBookingDate.Text = "";
-            txtIsPaid.Text = "";
+            cbIsPaid.Text = "";
             txtSearch.Text = "";
             LoadTickets();
         }
@@ -73,15 +72,24 @@ namespace CinemaManagementSystem.UserControls
                     return;
                 }
 
+                int? showtimeId = cbShowtimeId.SelectedItem as int?;
+                string seatNumber = txtSeatNumber.Text.Trim();
+
+                if (con.Tickets.Any(t => t.ShowtimeId == showtimeId && t.SeatNumber == seatNumber))
+                {
+                    MessageBox.Show($"Ghế {seatNumber} đã được đặt trong Showtime ID {showtimeId}.");
+                    return;
+                }
+
                 Ticket ticket = new Ticket
                 {
                     TicketId = ticketId,
-                    ShowtimeId = cbShowtimeId.SelectedItem as int?,
+                    ShowtimeId = showtimeId,
                     CustomerId = cbCustomerId.SelectedItem as int?,
-                    SeatNumber = txtSeatNumber.Text.Trim(),
+                    SeatNumber = seatNumber,
                     Price = int.TryParse(txtPrice.Text.Trim(), out int price) ? price : null,
-                    BookingDate = DateOnly.TryParse(txtBookingDate.Text.Trim(), out DateOnly bookingDate) ? bookingDate : null,
-                    IsPaid = bool.TryParse(txtIsPaid.Text.Trim(), out bool isPaid) ? isPaid : null,
+                    BookingDate = DateOnly.FromDateTime(DateTime.Now),
+                    IsPaid = bool.TryParse(cbIsPaid.Text.Trim(), out bool isPaid) ? isPaid : null,
                     ProcessedBy = currentUserId
                 };
 
@@ -103,12 +111,23 @@ namespace CinemaManagementSystem.UserControls
                 var ticket = con.Tickets.FirstOrDefault(t => t.TicketId == ticketId);
                 if (ticket != null)
                 {
-                    ticket.ShowtimeId = cbShowtimeId.SelectedItem as int?;
+                    int? newShowtimeId = cbShowtimeId.SelectedItem as int?;
+                    string newSeatNumber = txtSeatNumber.Text.Trim();
+
+                    if (con.Tickets.Any(t => t.TicketId != ticketId &&
+                                             t.ShowtimeId == newShowtimeId &&
+                                             t.SeatNumber == newSeatNumber))
+                    {
+                        MessageBox.Show($"Ghế {newSeatNumber} đã được đặt trong Showtime ID {newShowtimeId}.");
+                        return;
+                    }
+
+                    ticket.ShowtimeId = newShowtimeId;
                     ticket.CustomerId = cbCustomerId.SelectedItem as int?;
-                    ticket.SeatNumber = txtSeatNumber.Text.Trim();
+                    ticket.SeatNumber = newSeatNumber;
                     ticket.Price = int.TryParse(txtPrice.Text.Trim(), out int price) ? price : null;
-                    ticket.BookingDate = DateOnly.TryParse(txtBookingDate.Text.Trim(), out DateOnly bookingDate) ? bookingDate : null;
-                    ticket.IsPaid = bool.TryParse(txtIsPaid.Text.Trim(), out bool isPaid) ? isPaid : null;
+                    ticket.BookingDate = DateOnly.FromDateTime(DateTime.Now);
+                    ticket.IsPaid = bool.TryParse(cbIsPaid.Text.Trim(), out bool isPaid) ? isPaid : null;
                     ticket.ProcessedBy = currentUserId;
 
                     con.SaveChanges();
@@ -178,8 +197,7 @@ namespace CinemaManagementSystem.UserControls
                 cbCustomerId.SelectedItem = ticket.CustomerId;
                 txtSeatNumber.Text = ticket.SeatNumber ?? "";
                 txtPrice.Text = ticket.Price?.ToString() ?? "";
-                txtBookingDate.Text = ticket.BookingDate?.ToString("yyyy-MM-dd") ?? "";
-                txtIsPaid.Text = ticket.IsPaid?.ToString() ?? "";
+                cbIsPaid.Text = ticket.IsPaid?.ToString() ?? "";
             }
         }
 
@@ -231,6 +249,24 @@ namespace CinemaManagementSystem.UserControls
             {
                 MessageBox.Show("Vui lòng chọn Showtime ID để xem ghế trống.");
             }
+        }
+
+        private void CalculateRevenue_Click(object sender, RoutedEventArgs e)
+        {
+            var totalRevenue = con.Tickets
+                .Where(t => t.IsPaid == true && t.Price.HasValue)
+                .Sum(t => t.Price.Value);
+
+            MessageBox.Show($"Doanh thu (đã thanh toán): {totalRevenue:N0} VND", "Thống kê");
+        }
+
+        private void CalculateExpectedRevenue_Click(object sender, RoutedEventArgs e)
+        {
+            var expectedRevenue = con.Tickets
+                .Where(t => t.Price.HasValue)
+                .Sum(t => t.Price.Value);
+
+            MessageBox.Show($"Doanh thu dự kiến: {expectedRevenue:N0} VND", "Thống kê");
         }
 
         private List<string> GenerateSeatList()

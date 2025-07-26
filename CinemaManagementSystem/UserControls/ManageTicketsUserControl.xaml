@@ -29,7 +29,6 @@
                 <DataGridTextColumn Header="Customer ID" Binding="{Binding CustomerId}" Width="*" />
                 <DataGridTextColumn Header="Seat Number" Binding="{Binding SeatNumber}" Width="*" />
                 <DataGridTextColumn Header="Price" Binding="{Binding Price}" Width="*" />
-                <DataGridTextColumn Header="Booking Date" Binding="{Binding BookingDate}" Width="*" />
                 <DataGridCheckBoxColumn Header="Is Paid" Binding="{Binding IsPaid, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Width="*" />
             </DataGrid.Columns>
         </DataGrid>
@@ -38,14 +37,16 @@
         <StackPanel Grid.Row="1" Orientation="Vertical">
 
             <StackPanel Orientation="Horizontal" Margin="0,5,0,0" HorizontalAlignment="Left">
-
                 <TextBox x:Name="txtSearch" Width="200" Margin="5" />
                 <Button Content="Search" Click="Search_Click" Margin="5" Width="80" />
+            </StackPanel>
 
+            <StackPanel Orientation="Horizontal" Margin="0,5,0,0" HorizontalAlignment="Right">
+                <Button Content="Doanh thu dự kiến " Click="CalculateExpectedRevenue_Click" Margin="5" Width="120" />
+                <Button Content="Doanh thu" Click="CalculateRevenue_Click" Margin="5" Width="120" />
                 <TextBlock Text="Showtime ID:" VerticalAlignment="Center" Margin="10,0,5,0" />
                 <ComboBox x:Name="cbShowtimeForSeats" Width="120" Margin="5" />
                 <Button Content="Check available seats" Click="ViewAvailableSeats_Click" Width="150" Margin="5" />
-
             </StackPanel>
 
             <!-- Buttons -->
@@ -88,21 +89,18 @@
                         <TextBlock Text="Price" />
                         <TextBox x:Name="txtPrice" Width="350" />
                     </StackPanel>
+                    
                     <StackPanel Margin="5">
-                        <TextBlock Text="Booking Date (yyyy-MM-dd)" />
-                        <TextBox x:Name="txtBookingDate" Width="350" />
+                        <TextBlock Text="Is Paid" />
+                        <ComboBox x:Name="cbIsPaid" Width="350">
+                            <ComboBoxItem Content="True" />
+                            <ComboBoxItem Content="False" />
+                        </ComboBox>
                     </StackPanel>
+
                 </StackPanel>
 
-                <!-- Row 4 -->
-                <StackPanel Orientation="Horizontal" Margin="0,5">
-                    <StackPanel Margin="5">
-                        <TextBlock Text="Is Paid (true/false)" />
-                        <TextBox x:Name="txtIsPaid" Width="350" />
-                    </StackPanel>
-                </StackPanel>
             </StackPanel>
-
         </StackPanel>
     </Grid>
 </UserControl>
